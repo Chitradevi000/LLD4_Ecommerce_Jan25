@@ -6,6 +6,7 @@ import dev.chitra.EcommerceProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,5 +21,9 @@ public class ProductController {
     public ResponseEntity getAllProducts() {
         List<FakeStoreProductResponseDTO> listOfProducts=productService.getAllProducts();
         return ResponseEntity.ok(listOfProducts);
+    }
+    @GetMapping("/product/{id}")
+    public FakeStoreProductResponseDTO getProductById(@PathVariable int id) {
+        return productService.getProductById(id);
     }
 }
