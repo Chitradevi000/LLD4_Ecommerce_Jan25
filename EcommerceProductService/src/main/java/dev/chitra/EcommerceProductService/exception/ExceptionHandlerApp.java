@@ -26,4 +26,10 @@ public class ExceptionHandlerApp {
         ExceptionReponseDTo exceptionReponseDTo=new ExceptionReponseDTo(404,e.getMessage());
         return new ResponseEntity<>(exceptionReponseDTo, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RandomException.class)
+    private ResponseEntity productRandomException(RandomException ex) {
+        ExceptionReponseDTo productRandomResponse = new ExceptionReponseDTo(404,ex.getMessage());
+        return new ResponseEntity<>(productRandomResponse,HttpStatus.NOT_FOUND);
+    }
 }

@@ -17,4 +17,10 @@ public class ExceptionHandlerCartController {
         ExceptionReponseDTo fakeStoreCartResponseDto = new ExceptionReponseDTo(404,ex.getMessage());
         return new ResponseEntity<>(fakeStoreCartResponseDto,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(RandomException.class)
+    private ResponseEntity cartRandomException(RandomException ex) {
+        ExceptionReponseDTo cartRandomResponse = new ExceptionReponseDTo(404,ex.getMessage());
+        return new ResponseEntity<>(cartRandomResponse,HttpStatus.NOT_FOUND);
+    }
 }

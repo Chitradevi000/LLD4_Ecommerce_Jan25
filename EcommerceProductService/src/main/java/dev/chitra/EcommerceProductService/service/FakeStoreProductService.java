@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductServiceImpl")
 public class FakeStoreProductService implements ProductService{
 
     @Autowired

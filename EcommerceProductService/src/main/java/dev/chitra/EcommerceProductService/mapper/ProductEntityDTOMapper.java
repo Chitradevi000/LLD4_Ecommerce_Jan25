@@ -19,7 +19,7 @@ public class ProductEntityDTOMapper {
         productReponseDTO.setProductDescription(product.getDescription());
         productReponseDTO.setProductPrice(product.getPrice());
         productReponseDTO.setProductImage(product.getImage());
-        productReponseDTO.setProductId(product.getId());
+//        productReponseDTO.setProductId(product.getId()); //I am commenting this line after I made basemodel in entity package where I have ID as common for all tables
         return productReponseDTO;
     }
 }

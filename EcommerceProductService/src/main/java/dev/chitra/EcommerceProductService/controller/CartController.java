@@ -3,7 +3,9 @@ package dev.chitra.EcommerceProductService.controller;
 import dev.chitra.EcommerceProductService.client.FakeStoreClient;
 import dev.chitra.EcommerceProductService.dto.FakeStoreCartResponseDto;
 import dev.chitra.EcommerceProductService.exception.CartNotFoundException;
+import dev.chitra.EcommerceProductService.exception.RandomException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +27,10 @@ public class CartController {
             throw new CartNotFoundException("Cart is empty for this UserId" + userId);
         }
         return fakeStoreClient.getCartByUserId(userId);
+    }
+
+    @GetMapping("/cartexceptioncheck")
+    public ResponseEntity cartExceptionCheck() {
+        throw new RandomException("Cart is empty thrown from RandomException");
     }
 }

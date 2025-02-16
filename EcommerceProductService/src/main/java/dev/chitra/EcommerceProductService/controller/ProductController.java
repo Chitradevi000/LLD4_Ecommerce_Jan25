@@ -2,12 +2,12 @@ package dev.chitra.EcommerceProductService.controller;
 
 import dev.chitra.EcommerceProductService.dto.FakeStoreProductResponseDTO;
 import dev.chitra.EcommerceProductService.entity.Product;
+import dev.chitra.EcommerceProductService.exception.RandomException;
 import dev.chitra.EcommerceProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,6 +15,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
+    @Qualifier("productServiceImpl")
     private ProductService productService; //Field injection
 
     @GetMapping("/product")
@@ -25,5 +26,16 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public FakeStoreProductResponseDTO getProductById(@PathVariable int id) {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/productexceptioncheck")
+    public ResponseEntity productExceptionCheck() {
+        throw new RandomException("Product is empty thrown from RandomException");
+    }
+
+    @PostMapping("/createproduct")
+    public ResponseEntity createProduct(@RequestBody Product product) {
+        Product createdProduct = productService.createProduct(product);
+        return ResponseEntity.ok(createdProduct);
     }
 }
