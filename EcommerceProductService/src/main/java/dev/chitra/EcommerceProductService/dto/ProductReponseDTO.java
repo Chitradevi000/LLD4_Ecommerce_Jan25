@@ -1,5 +1,6 @@
 package dev.chitra.EcommerceProductService.dto;
 
+import dev.chitra.EcommerceProductService.entity.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,6 @@ public class ProductReponseDTO {
     private String productDescription;
     private double productPrice;
     private String productImage;
-    private String productCategory;
+    private Category productCategory;
     private double productRating;
 }

@@ -1,6 +1,8 @@
 package dev.chitra.EcommerceProductService.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,6 +17,8 @@ public class Product extends BaseModel {
     private int price;
     private int quantity;
     private String image;
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }
