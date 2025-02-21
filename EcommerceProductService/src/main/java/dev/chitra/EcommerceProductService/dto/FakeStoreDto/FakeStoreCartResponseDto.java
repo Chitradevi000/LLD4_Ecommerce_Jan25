@@ -1,5 +1,6 @@
-package dev.chitra.EcommerceProductService.dto;
+package dev.chitra.EcommerceProductService.dto.FakeStoreDto;
 
+import dev.chitra.EcommerceProductService.dto.ProductsListDto;
 import lombok.Getter;
 import lombok.Setter;
 

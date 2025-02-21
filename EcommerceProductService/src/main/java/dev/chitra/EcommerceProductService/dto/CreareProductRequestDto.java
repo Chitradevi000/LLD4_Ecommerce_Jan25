@@ -1,18 +1,18 @@
 package dev.chitra.EcommerceProductService.dto;
 
-import dev.chitra.EcommerceProductService.entity.Category;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.UUID;
 
 @Getter
 @Setter
-public class ProductReponseDTO {
-    private int productId;
+public class CreareProductRequestDto {
     private String productName;
     private String productDescription;
     private double productPrice;
     private String productImage;
     private String productCategory;
     private double productRating;
+    private UUID categoryId;
 }

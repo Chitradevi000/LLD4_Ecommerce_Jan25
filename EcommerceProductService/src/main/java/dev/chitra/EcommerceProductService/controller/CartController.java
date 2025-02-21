@@ -1,7 +1,7 @@
 package dev.chitra.EcommerceProductService.controller;
 
 import dev.chitra.EcommerceProductService.client.FakeStoreClient;
-import dev.chitra.EcommerceProductService.dto.FakeStoreCartResponseDto;
+import dev.chitra.EcommerceProductService.dto.FakeStoreDto.FakeStoreCartResponseDto;
 import dev.chitra.EcommerceProductService.exception.CartNotFoundException;
 import dev.chitra.EcommerceProductService.exception.RandomException;
 import org.springframework.beans.factory.annotation.Autowired;

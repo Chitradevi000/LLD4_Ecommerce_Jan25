@@ -1,7 +1,7 @@
 package dev.chitra.EcommerceProductService.controller;
 
-import dev.chitra.EcommerceProductService.dto.FakeStoreProductResponseDTO;
-import dev.chitra.EcommerceProductService.entity.Category;
+import dev.chitra.EcommerceProductService.dto.CreareProductRequestDto;
+import dev.chitra.EcommerceProductService.dto.ProductReponseDTO;
 import dev.chitra.EcommerceProductService.entity.Product;
 import dev.chitra.EcommerceProductService.exception.RandomException;
 import dev.chitra.EcommerceProductService.service.ProductService;
@@ -22,18 +22,18 @@ public class ProductController {
     private ProductService productService; //Field injection
 
     @GetMapping
-    public ResponseEntity getAllProducts() {
-        List<Product> listOfProducts=productService.getAllProducts();
+    public ResponseEntity<List<ProductReponseDTO>> getAllProducts() {
+        List<ProductReponseDTO> listOfProducts=productService.getAllProducts();
         return ResponseEntity.ok(listOfProducts);
     }
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable UUID id) {
+    public ResponseEntity<ProductReponseDTO> getProductById(@PathVariable UUID id) {
        if(id==null)
        {
            throw new RandomException("id is null which is invalid");
        }
 
-        return productService.getProductById(id);
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
     /*
@@ -44,8 +44,8 @@ public class ProductController {
     }*/
 
     @PostMapping("/createproduct")
-    public ResponseEntity createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.createProduct(product);
+    public ResponseEntity createProduct(@RequestBody CreareProductRequestDto product) {
+        ProductReponseDTO createdProduct = productService.createProduct(product);
         return ResponseEntity.ok(createdProduct);
     }
 

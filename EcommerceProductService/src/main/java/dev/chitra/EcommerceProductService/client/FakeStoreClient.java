@@ -1,11 +1,8 @@
 package dev.chitra.EcommerceProductService.client;
 
-import dev.chitra.EcommerceProductService.dto.FakeStoreCartResponseDto;
-import dev.chitra.EcommerceProductService.dto.FakeStoreProductRatingDTO;
-import dev.chitra.EcommerceProductService.dto.FakeStoreProductResponseDTO;
+import dev.chitra.EcommerceProductService.dto.FakeStoreDto.FakeStoreCartResponseDto;
+import dev.chitra.EcommerceProductService.dto.FakeStoreDto.FakeStoreProductResponseDTO;
 import dev.chitra.EcommerceProductService.exception.CartNotFoundException;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;

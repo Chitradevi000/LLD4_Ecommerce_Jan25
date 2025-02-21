@@ -1,5 +1,6 @@
 package dev.chitra.EcommerceProductService.mapper;
 
+import dev.chitra.EcommerceProductService.dto.CreareProductRequestDto;
 import dev.chitra.EcommerceProductService.dto.ProductReponseDTO;
 import dev.chitra.EcommerceProductService.entity.Product;
 
@@ -12,14 +13,26 @@ data to the customer or any end user
 */
 
 public class ProductEntityDTOMapper {
-    public static ProductReponseDTO ProductEntityDTOMapper(Product product) {
+    public static ProductReponseDTO productEntityDTOMapperConversion(Product product) {
         ProductReponseDTO productReponseDTO = new ProductReponseDTO();
-        productReponseDTO.setProductCategory(product.getCategory());
+        productReponseDTO.setProductCategory(product.getCategory().getName());
         productReponseDTO.setProductName(product.getName());
         productReponseDTO.setProductDescription(product.getDescription());
         productReponseDTO.setProductPrice(product.getPrice());
         productReponseDTO.setProductImage(product.getImage());
 //        productReponseDTO.setProductId(product.getId()); //I am commenting this line after I made basemodel in entity package where I have ID as common for all tables
         return productReponseDTO;
+    }
+
+    public static Product convertDtoToMapper(CreareProductRequestDto dto) {
+        Product product = new Product();
+//        product.setCategory(dto.getProductCategory().);
+        product.setRating(0);
+        product.setName(dto.getProductName());
+        product.setDescription(dto.getProductDescription());
+        product.setPrice(dto.getProductPrice());
+        product.setImage(dto.getProductImage());
+//        productReponseDTO.setProductId(product.getId()); //I am commenting this line after I made basemodel in entity package where I have ID as common for all tables
+        return product;
     }
 }
