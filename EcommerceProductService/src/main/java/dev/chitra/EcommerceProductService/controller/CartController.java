@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/*
+in cart ctrlr was only created to show the use of ctrlr advise , in this '
+code we are not doing anything related to cart
+ */
+
 @RestController
 public class CartController {
 
