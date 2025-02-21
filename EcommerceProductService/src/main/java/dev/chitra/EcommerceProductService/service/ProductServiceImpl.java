@@ -6,6 +6,7 @@ import dev.chitra.EcommerceProductService.dto.CreareProductRequestDto;
 import dev.chitra.EcommerceProductService.dto.ProductReponseDTO;
 import dev.chitra.EcommerceProductService.entity.Category;
 import dev.chitra.EcommerceProductService.entity.Product;
+import dev.chitra.EcommerceProductService.exception.CategoryNotFoundException;
 import dev.chitra.EcommerceProductService.exception.ProductNotFoundException;
 import dev.chitra.EcommerceProductService.mapper.ProductEntityDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,23 +66,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product, UUID id) {
-       Product existingProduct= productRepository.findById(id).orElseThrow(
+    public ProductReponseDTO updateProduct(CreareProductRequestDto product, UUID id) {
+
+        //updating product- I need to change the given dto to product first
+
+        Product getProductFromDto=ProductEntityDTOMapper.convertDtoToProduct(product);
+
+        Product existingProduct= productRepository.findById(id).orElseThrow(
                 () -> new ProductNotFoundException("Product not found for the ID- for updating it"+id)
         );
-        existingProduct.setName(product.getName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setCategory(product.getCategory());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setImage(product.getImage());
-        return productRepository.save(existingProduct);
+        existingProduct.setName(product.getProductName());
+        existingProduct.setDescription(product.getProductDescription());
+        existingProduct.setPrice(product.getProductPrice());
+        existingProduct.setImage(product.getProductImage());
+
+        return ProductEntityDTOMapper.productEntityDTOMapperConversion(existingProduct);
  }
 
     @Override
     public ProductReponseDTO createProduct(CreareProductRequestDto productDto) {
-       //convert dto to product before repo
-        Product product=ProductEntityDTOMapper.convertDtoToMapper(productDto);
+       //convert dto to product to save it in repo
+        Product product=ProductEntityDTOMapper.convertDtoToProduct(productDto);
+
+        //get the category from Category table, because the requestDto is having only CatID
+        //but we need to save Category obj in porduct table
+        //hence find the category using the catId
+        Category findCategoryOfGivenPdt=categoryRepository.findById(productDto.getCategoryId()).orElseThrow(
+                ()->new CategoryNotFoundException("Category not found for the ID-"+productDto.getCategoryId())
+        );
+        product.setCategory(findCategoryOfGivenPdt); // everything in product obj and set and ready to save
         Product createdProduct= productRepository.save(product);
         return ProductEntityDTOMapper.productEntityDTOMapperConversion(createdProduct);
 
@@ -98,8 +111,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByPriceBetween(int minPrice, int maxPrice) {
-        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    public List<ProductReponseDTO> findByPriceBetween(int minPrice, int maxPrice) {
+        List<ProductReponseDTO> productReponseDTOS=new ArrayList<>();
+        List<Product> filteredProducts=productRepository.findByPriceBetween(minPrice, maxPrice);
+        for(Product product:filteredProducts){
+            productReponseDTOS.add(ProductEntityDTOMapper.productEntityDTOMapperConversion(product));
+        }
+        return productReponseDTOS;
     }
 
     //I am goign to

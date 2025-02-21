@@ -44,7 +44,7 @@ public class ProductController {
     }*/
 
     @PostMapping("/createproduct")
-    public ResponseEntity createProduct(@RequestBody CreareProductRequestDto product) {
+    public ResponseEntity<ProductReponseDTO> createProduct(@RequestBody CreareProductRequestDto product) {
         ProductReponseDTO createdProduct = productService.createProduct(product);
         return ResponseEntity.ok(createdProduct);
     }
@@ -55,9 +55,11 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+
+    //update we are not allowing to change the category and rating
     @PutMapping("/updatemapping/{id}")
-    public ResponseEntity updateProduct(@RequestBody Product product, @PathVariable("id") UUID id) {
-        Product updatedProduct = productService.updateProduct(product, id);
+    public ResponseEntity<ProductReponseDTO> updateProduct(@RequestBody CreareProductRequestDto product, @PathVariable("id") UUID id) {
+        ProductReponseDTO updatedProduct = productService.updateProduct(product, id);
         return ResponseEntity.ok(updatedProduct);
     }
 
@@ -69,7 +71,7 @@ public class ProductController {
 
     @GetMapping("/{minprice}/{maxprice}")
     public ResponseEntity getProductByMinPrice(@PathVariable int minprice, @PathVariable int maxprice) {
-        List<Product> filterByPrice=productService.findByPriceBetween(minprice,maxprice);
+        List<ProductReponseDTO> filterByPrice=productService.findByPriceBetween(minprice,maxprice);
         return ResponseEntity.ok(filterByPrice);
     }
 }

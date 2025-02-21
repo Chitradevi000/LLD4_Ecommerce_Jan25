@@ -32,4 +32,11 @@ public class ExceptionHandlerApp {
         ExceptionReponseDTo productRandomResponse = new ExceptionReponseDTo(404,ex.getMessage());
         return new ResponseEntity<>(productRandomResponse,HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    private ResponseEntity productCategoryNotFoundException(CategoryNotFoundException ex) {
+            ExceptionReponseDTo productCategoryNotFoundResponse = new ExceptionReponseDTo(404,ex.getMessage());
+            return new ResponseEntity<>(productCategoryNotFoundResponse,HttpStatus.NOT_FOUND);
+    }
 }

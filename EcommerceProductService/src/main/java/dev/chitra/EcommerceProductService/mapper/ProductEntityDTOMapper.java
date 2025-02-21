@@ -24,7 +24,7 @@ public class ProductEntityDTOMapper {
         return productReponseDTO;
     }
 
-    public static Product convertDtoToMapper(CreareProductRequestDto dto) {
+    public static Product convertDtoToProduct(CreareProductRequestDto dto) {
         Product product = new Product();
 //        product.setCategory(dto.getProductCategory().);
         product.setRating(0);

@@ -18,12 +18,12 @@ public interface ProductService {
 
     Boolean deleteProductById(UUID id) throws ProductNotFoundException;
 
-    Product updateProduct(Product product, UUID id) throws ProductNotFoundException;
+    ProductReponseDTO updateProduct(CreareProductRequestDto product, UUID id) throws ProductNotFoundException;
 
     ProductReponseDTO createProduct(CreareProductRequestDto product);
     //below 3 are written after I made a JPA query in ProductRepository
 
     Product findByName(String name);
     List<Product> findByCategory(Category category);
-    List<Product> findByPriceBetween(int minPrice, int maxPrice);
+    List<ProductReponseDTO> findByPriceBetween(int minPrice, int maxPrice);
 }
