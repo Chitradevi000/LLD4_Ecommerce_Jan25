@@ -14,4 +14,5 @@ public interface CategoryService {
     CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto);
     CategoryResponseDto updateCategory(UUID catId,CategoryRequestDto categoryRequestDto);
     Boolean deleteCategory(UUID catId);
+    Double getTotalPrice(UUID id);
 }

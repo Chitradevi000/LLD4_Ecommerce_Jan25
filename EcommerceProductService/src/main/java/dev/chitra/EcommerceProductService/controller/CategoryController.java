@@ -43,4 +43,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.deleteCategory(id));
     }
 
+    //apart from CRUD operation, lets make a different one
+
+    @GetMapping("/totalprice/{categoryId}")
+    public ResponseEntity<Double> getTotalPrice(@PathVariable("categoryId") UUID categoryId) {
+        return ResponseEntity.ok(categoryService.getTotalPrice(categoryId));
+    }
+
+
 }

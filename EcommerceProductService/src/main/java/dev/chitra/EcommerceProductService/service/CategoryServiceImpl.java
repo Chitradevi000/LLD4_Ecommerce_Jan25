@@ -3,8 +3,8 @@ package dev.chitra.EcommerceProductService.service;
 import dev.chitra.EcommerceProductService.Repository.CategoryRepository;
 import dev.chitra.EcommerceProductService.dto.CategoryRequestDto;
 import dev.chitra.EcommerceProductService.dto.CategoryResponseDto;
-import dev.chitra.EcommerceProductService.dto.ProductReponseDTO;
 import dev.chitra.EcommerceProductService.entity.Category;
+import dev.chitra.EcommerceProductService.entity.Product;
 import dev.chitra.EcommerceProductService.exception.CategoryNotFoundException;
 import dev.chitra.EcommerceProductService.mapper.CategoryEntityDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getAllCategory() {
 
-        List<Category> listOfCategory= (List<Category>) categoryRepository.findAll();
+        List<Category> listOfCategory = (List<Category>) categoryRepository.findAll();
         List<CategoryResponseDto> categoryResponseDtos = new ArrayList<>();
-        for(Category category:listOfCategory)
-        {
+        for (Category category : listOfCategory) {
             categoryResponseDtos.add(CategoryEntityDtoMapper.convertEntityToDto(category));
         }
         return categoryResponseDtos;
@@ -39,15 +38,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto) {
-        Category savedCategory= categoryRepository.save(CategoryEntityDtoMapper.convertDtoToEntity(categoryRequestDto));
+        Category savedCategory = categoryRepository.save(CategoryEntityDtoMapper.convertDtoToEntity(categoryRequestDto));
         return CategoryEntityDtoMapper.convertEntityToDto(savedCategory);
     }
 
     @Override
     public CategoryResponseDto updateCategory(UUID catId, CategoryRequestDto categoryRequestDto) {
         //get the existingCategory from the given catId
-        Category findExistingCatById=categoryRepository.findById(catId).orElseThrow(
-                ()->new CategoryNotFoundException("Category not found"+catId)
+        Category findExistingCatById = categoryRepository.findById(catId).orElseThrow(
+                () -> new CategoryNotFoundException("Category not found" + catId)
         );
         findExistingCatById.setName(categoryRequestDto.getCategoryName());
         return CategoryEntityDtoMapper.convertEntityToDto(categoryRepository.save(findExistingCatById));
@@ -55,10 +54,27 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean deleteCategory(UUID catId) {
-        Category findExistingCatById=categoryRepository.findById(catId).orElseThrow(
-                ()->new CategoryNotFoundException("Category not found"+catId)
+        Category findExistingCatById = categoryRepository.findById(catId).orElseThrow(
+                () -> new CategoryNotFoundException("Category not found" + catId)
         );
         categoryRepository.deleteById(catId);
-      return true;
+        return true;
     }
+
+    @Override
+    public Double getTotalPrice(UUID id) {
+        Category findExistingCatById = categoryRepository.findById(id).orElseThrow(
+                () -> new CategoryNotFoundException("Category not found" + id)
+        );
+        if (findExistingCatById.getProducts().isEmpty()) {
+            return 0.0;
+        } else {
+            double totalPrice = 0.0;
+            for (Product product : findExistingCatById.getProducts()) {
+                totalPrice += product.getPrice();
+            }
+            return totalPrice;
+        }
+    }
+
 }

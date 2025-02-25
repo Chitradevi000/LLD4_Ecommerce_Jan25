@@ -16,8 +16,10 @@ public class CategoryEntityDtoMapper {
         categoryResponseDto.setCategoryId(category.getId());
         categoryResponseDto.setCategoryName(category.getName());
         List<ProductReponseDTO> productReponseDTOList = new ArrayList<>();
-        for (Product product : category.getProducts()) {
-            productReponseDTOList.add(ProductEntityDTOMapper.productEntityDTOMapperConversion(product));
+        if(category.getProducts() != null && category.getProducts().size() > 0) {
+            for (Product product : category.getProducts()) {
+                productReponseDTOList.add(ProductEntityDTOMapper.productEntityDTOMapperConversion(product));
+            }
         }
         categoryResponseDto.setListOfProducts(productReponseDTOList);
         return categoryResponseDto;
