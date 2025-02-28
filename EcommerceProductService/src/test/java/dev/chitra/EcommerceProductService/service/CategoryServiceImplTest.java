@@ -3,6 +3,7 @@ package dev.chitra.EcommerceProductService.service;
 import dev.chitra.EcommerceProductService.Repository.CategoryRepository;
 import dev.chitra.EcommerceProductService.entity.Category;
 import dev.chitra.EcommerceProductService.entity.Product;
+import dev.chitra.EcommerceProductService.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -137,7 +138,13 @@ public class CategoryServiceImplTest {
     //3. check whether the catiD is valid
     public void categoryNotFoundExceptionTest()
     {
+        //arrange
         UUID catId = UUID.randomUUID();
+        Mockito.when(categoryRepository.findById(catId)).thenReturn(Optional.empty());
 
+        //act and assert -- why are we giving method getTotalPrice
+        //because we are verifying the CatID existance when ever we execute getTotalPrice method
+        Assertions.assertThrows(CategoryNotFoundException.class,
+                ()-> categoryService.getTotalPrice(catId));
     }
 }
